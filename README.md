@@ -1,0 +1,1 @@
+A typescript program that converts to javascript; implementing Langton's Ant automata.
