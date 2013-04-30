@@ -27,16 +27,44 @@ var Ant = (function () {
     //orientation - Default Direction North
     //pattern for ant to move in (depending on color)
     //color for pattern movement.
-    function Ant(location, precision, orientation, pattern, colorPattern) {
+    function Ant(location, precision, orientation, pattern, colorPattern, intialBackgroundColor) {
         if (typeof orientation === "undefined") { orientation = Direction.NORTH; }
         if (typeof pattern === "undefined") { pattern = 'LR'; }
         if (typeof colorPattern === "undefined") { colorPattern = 'BW'; }
+        if (typeof intialBackgroundColor === "undefined") { intialBackgroundColor = 'White'; }
         this.location = location;
         this.orientation = orientation;
         this.precision = precision;
         this.pattern = pattern;
         this.colorPattern = colorPattern;
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = intialBackgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
+    Ant.prototype.GetNextColor = //Get next color in index
+    //simple single letter patterns for now.
+    function (index) {
+        var newColor = this.colorPattern[index];
+        switch(newColor) {
+            case 'W':
+                return "White";
+            case 'B':
+                return "Black";
+            case 'R':
+                return "Red";
+            case 'O':
+                return "Orange";
+            case 'Y':
+                return "Yellow";
+            case 'G':
+                return "Green";
+            case 'U':
+                return "Blue";
+            case 'V':
+                return "Purple";
+        }
+    };
     Ant.prototype.Rotate = //Rotate based on string Left/Right
     function (c) {
         if(c === 'L') {
@@ -63,29 +91,6 @@ var Ant = (function () {
             this.orientation = 0;
         }
     };
-    Ant.prototype.GetNextColor = //Get next color in index
-    //simple single letter patterns for now.
-    function (index) {
-        var newColor = this.colorPattern[index];
-        switch(newColor) {
-            case 'W':
-                return "White";
-            case 'B':
-                return "Black";
-            case 'R':
-                return "Red";
-            case 'O':
-                return "Orange";
-            case 'Y':
-                return "Yellow";
-            case 'G':
-                return "Green";
-            case 'U':
-                return "Blue";
-            case 'V':
-                return "Purple";
-        }
-    };
     Ant.prototype.Move = //Move ant
     function () {
         var canvas = document.getElementById("myCanvas");
@@ -101,19 +106,19 @@ var Ant = (function () {
         } else if(pix[0] == 255 && pix[1] == 0 && pix[2] == 0) {
             //Red
             var index = this.colorPattern.indexOf("R", 0);
-        } else if(pix[0] == 255 && pix[1] == 153 && pix[2] == 0) {
+        } else if(pix[0] == 255 && pix[1] == 165 && pix[2] == 0) {
             //Orange
             var index = this.colorPattern.indexOf("O", 0);
-        } else if(pix[0] == 255 && pix[1] == 204 && pix[2] == 0) {
+        } else if(pix[0] == 255 && pix[1] == 255 && pix[2] == 0) {
             //Yellow
             var index = this.colorPattern.indexOf("Y", 0);
-        } else if(pix[0] == 0 && pix[1] == 255 && pix[2] == 0) {
+        } else if(pix[0] == 0 && pix[1] == 128 && pix[2] == 0) {
             //Green
             var index = this.colorPattern.indexOf("G", 0);
-        } else if(pix[0] == 0 && pix[1] == 0 && pix[2] == 102) {
+        } else if(pix[0] == 0 && pix[1] == 0 && pix[2] == 255) {
             //Blue
             var index = this.colorPattern.indexOf("U", 0);
-        } else if(pix[0] == 102 && pix[1] == 51 && pix[2] == 153) {
+        } else if(pix[0] == 128 && pix[1] == 0 && pix[2] == 128) {
             //Purple
             var index = this.colorPattern.indexOf("V", 0);
         }
@@ -149,7 +154,7 @@ var Ant = (function () {
     return Ant;
 })();
 window.onload = function () {
-    var ant = new Ant(new Point(600, 600), 1, Direction.NORTH, 'LR', 'BW');
+    var ant = new Ant(new Point(600, 600), 1, Direction.NORTH, 'LRLL', 'ROWY', 'Red');
     for(var i = 0; i < 11000; i++) {
         ant.Move();
     }

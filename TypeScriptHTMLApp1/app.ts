@@ -26,11 +26,42 @@ class Ant{
     //orientation - Default Direction North
     //pattern for ant to move in (depending on color)
     //color for pattern movement.
-    constructor(public location: Point, precision: number, orientation:Direction = Direction.NORTH, pattern:string = 'LR', colorPattern = 'BW') {
+    constructor(public location: Point, precision: number, orientation:Direction = Direction.NORTH, pattern:string = 'LR', colorPattern = 'BW', intialBackgroundColor = 'White') {
         this.orientation = orientation;
         this.precision = precision;
         this.pattern = pattern;
         this.colorPattern = colorPattern;
+
+        var canvas = <HTMLCanvasElement> document.getElementById("myCanvas");
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = intialBackgroundColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    //Get next color in index
+    //simple single letter patterns for now.
+    GetNextColor(index: number) {
+        var newColor = this.colorPattern[index];
+
+        switch (newColor) {
+            case 'W':
+                return "White";
+            case 'B':
+                return "Black";
+            case 'R':
+                return "Red";
+            case 'O':
+                return "Orange";
+            case 'Y':
+                return "Yellow";
+            case 'G':
+                return "Green";
+            case 'U':
+                return "Blue";
+            case 'V':
+                return "Purple";
+
+        }
     }
 
     //Rotate based on string Left/Right
@@ -65,38 +96,13 @@ class Ant{
         }
     }
 
-    //Get next color in index
-    //simple single letter patterns for now.
-    GetNextColor(index: number) {
-        var newColor = this.colorPattern[index];
-
-        switch (newColor) {
-            case 'W':
-                return "White";
-            case 'B':
-                return "Black";
-            case 'R':
-                return "Red";
-            case 'O':
-                return "Orange";
-            case 'Y':
-                return "Yellow";
-            case 'G':
-                return "Green";
-            case 'U':
-                return "Blue";
-            case 'V':
-                return "Purple";
-
-        }
-    }
-
     //Move ant
     Move() {
         var canvas = <HTMLCanvasElement> document.getElementById("myCanvas");
         var ctx = canvas.getContext('2d');
         var imgData = ctx.getImageData(this.location.X, this.location.Y, this.precision, this.precision);
         var pix = imgData.data;
+
 
         if (pix[0] == 255 && pix[1] == 255 && pix[2] == 255) { //White
             var index = this.colorPattern.indexOf("W", 0);
@@ -107,19 +113,19 @@ class Ant{
         else if (pix[0] == 255 && pix[1] == 0 && pix[2] == 0) {//Red
             var index = this.colorPattern.indexOf("R", 0);
         }
-        else if (pix[0] == 255 && pix[1] == 153 && pix[2] == 0) {//Orange
+        else if (pix[0] == 255 && pix[1] == 165 && pix[2] == 0) {//Orange
             var index = this.colorPattern.indexOf("O", 0);
         }
-        else if (pix[0] == 255 && pix[1] == 204 && pix[2] == 0) {//Yellow
+        else if (pix[0] == 255 && pix[1] == 255 && pix[2] == 0) {//Yellow
             var index = this.colorPattern.indexOf("Y", 0);
         }
-        else if (pix[0] == 0 && pix[1] == 255 && pix[2] == 0) {//Green
+        else if (pix[0] == 0 && pix[1] == 128 && pix[2] == 0) {//Green
             var index = this.colorPattern.indexOf("G", 0);
         }
-        else if (pix[0] == 0 && pix[1] == 0 && pix[2] == 102) {//Blue
+        else if (pix[0] == 0 && pix[1] == 0 && pix[2] == 255) {//Blue
             var index = this.colorPattern.indexOf("U", 0);
         }
-        else if (pix[0] == 102 && pix[1] == 51 && pix[2] == 153) {//Purple
+        else if (pix[0] == 128 && pix[1] == 0 && pix[2] == 128) {//Purple
             var index = this.colorPattern.indexOf("V", 0);
         }
 
@@ -154,7 +160,7 @@ class Ant{
 
 
 window.onload = () => {
-    var ant = new Ant(new Point(600, 600),1, Direction.NORTH, 'LR', 'BW');
+    var ant = new Ant(new Point(600, 600),1, Direction.NORTH, 'LRLL', 'ROWY', 'Red');
 
     for (var i = 0; i < 11000; i++) {
         ant.Move();
