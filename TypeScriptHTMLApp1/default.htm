@@ -1,16 +1,25 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <meta charset="utf-8" />
     <title>Langton's Ant App Written in TypeScript</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
     <script src="app.js"></script>
+    <script src="Scripts/jquery-2.0.0.min.js"></script>"
 </head>
 <body>
     <h2>Langton's Ant App Written in TypeScript</h2>
+    <label>Pattern:</label>
+    <input id="txtPattern" type="text" value ="LRLL" />
+    <label>Color Pattern:</label>
+    <input id="txtColorPattern" type="text" value="ROWY" /> 
+    <label>Initial Color:</label>
+    <input id="txtInitialColor" type="text" value="Red" />
+    <button id="btnRun" type="button">Run</button>
+    <br />
 
-    <canvas id="myCanvas" width="1200" height="1200"  style="border:1px solid #d3d3d3;"> 
+    <canvas id="myCanvas" width="800" height="800"  style="border:1px solid #d3d3d3;"> 
     Your browser does not support the HTML5 canvas tag. 
     </canvas> 
 </body>

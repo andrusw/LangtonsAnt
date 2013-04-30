@@ -1,3 +1,4 @@
+/// <reference path="Scripts\typings\jquery\jquery.d.ts"/>
 //Definition of a Point
 var Point = (function () {
     function Point(X, Y) {
@@ -154,9 +155,16 @@ var Ant = (function () {
     return Ant;
 })();
 window.onload = function () {
-    var ant = new Ant(new Point(600, 600), 1, Direction.NORTH, 'LRLL', 'ROWY', 'Red');
-    for(var i = 0; i < 11000; i++) {
-        ant.Move();
-    }
+    $('#btnRun').click(function () {
+        var pattern = $('#txtPattern').val();
+        var colorPattern = $('#txtColorPattern').val();
+        var initialColor = $('#txtInitialColor').val();
+        var midWidth = $('#myCanvas').width() >> 1;
+        var midHeight = $('#myCanvas').height() >> 1;
+        var ant = new Ant(new Point(midWidth, midHeight), 1, Direction.NORTH, pattern, colorPattern, initialColor);
+        for(var i = 0; i < 11000; i++) {
+            ant.Move();
+        }
+    });
 };
 //@ sourceMappingURL=app.js.map
